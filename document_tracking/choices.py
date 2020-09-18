@@ -1,7 +1,10 @@
 DOC_TYPE = (
-    ('Pdf', 'Pdf'),
-    ('Csv', 'Csv'),
-    ('Doc', 'Doc')
+    ('.pdf', '.pdf'),
+    ('.csv', '.csv'),
+    ('.doc', '.doc'),
+    ('.xlsx', '.xlsx'),
+    ('.htm', '.htm'),
+    ('.txt', '.txt')
 )
 
 DOCUMENT_STATUS = (

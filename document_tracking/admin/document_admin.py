@@ -18,11 +18,11 @@ class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
+                'doc_sender',
                 'doc_identifier',
                 'document_name',
                 'doc_type',
                 'file',
-                'status',
                 'send_to')}),
         audit_fieldset_tuple)
 

@@ -11,6 +11,12 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
 
     identifier_cls = DocumentIdentifier
 
+    doc_sender = models.CharField(
+        verbose_name="Name of Sender",
+        max_length=150,
+        blank=False,
+        null=False)
+
     doc_identifier = models.CharField(
         verbose_name="Document Identifier",
         max_length=36,
@@ -21,8 +27,8 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
     document_name = models.CharField(
         verbose_name="Document Name",
         max_length=150,
-        blank=True,
-        null=False)
+        blank=False,
+        null=True)
 
     doc_type = models.CharField(
         verbose_name="Document Type",
@@ -34,6 +40,8 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
     status = models.CharField(
         verbose_name="Document Status",
         max_length=20,
+        blank=True,
+        null=True,
         choices=DOCUMENT_STATUS)
 
     send_to = models.CharField(
@@ -46,4 +54,5 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.doc_identifier = self.identifier_cls().identifier
+            self.status = 'Sent'
         super().save(*args, **kwargs)
