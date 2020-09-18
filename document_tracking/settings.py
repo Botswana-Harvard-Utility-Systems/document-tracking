@@ -22,6 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'wp82q)s05i9bk)0xng(@_z6=6+*%0j$t21)m-yjaieav%6me-p'
 
+SITE_ID = 40
+
+REVIEWER_SITE_ID = 1
+
+APP_NAME = 'document_tracking'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -35,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'edc_base.apps.AppConfig',
+    'document_tracking.apps.AppConfig',
 ]
 
 MIDDLEWARE = [
@@ -45,6 +54,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
