@@ -5,4 +5,4 @@ class DocumentIdentifier(SimpleUniqueIdentifier):
 
     random_string_length = 5
     identifier_type = 'document_id'
-    template = 'DOC{device_id}{random_string}'
+    template = 'D{device_id}{random_string}'
