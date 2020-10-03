@@ -18,13 +18,7 @@ class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                'doc_sender',
                 'doc_identifier',
                 'document_name',
-                'doc_type',
-                'file',
-                'send_to')}),
+                'file')}),
         audit_fieldset_tuple)
-
-    radio_fields = {'doc_type': admin.VERTICAL,
-                    'status': admin.VERTICAL}
