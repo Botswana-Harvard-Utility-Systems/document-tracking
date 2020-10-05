@@ -10,6 +10,13 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
 
     identifier_cls = DocumentIdentifier
 
+    doc_identifier = models.CharField(
+        verbose_name="Document Identifier",
+        max_length=36,
+        null=True,
+        blank=True,
+        unique=True)
+
     document_name = models.CharField(
         verbose_name="Document Name",
         max_length=150,
