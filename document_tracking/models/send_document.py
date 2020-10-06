@@ -4,7 +4,7 @@ from django.db import models
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
 
-from bhp_personnel.models import Department
+from bhp_personnel.models import Department, Employee
 from ..choices import DOCUMENT_STATUS
 
 
@@ -19,11 +19,7 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
-    send_to = models.CharField(
-        verbose_name="Send To",
-        max_length=150,
-        blank=True,
-        null=True)
+    send_to = models.ForeignKey(Employee, on_delete=models.CASCADE)
 
     status = models.CharField(
         verbose_name="Status",
@@ -37,7 +33,10 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         choices=(('normal', 'Normal'), ('Medium', 'Medium'), ('high', 'High')),
         default='Normal')
 
-    comment = models.TextField(verbose_name='Comments')
+    comment = models.TextField(
+        verbose_name='Comments',
+        blank=True,
+        null=True,)
 
     action_date = models.DateField(
         verbose_name='Action date',

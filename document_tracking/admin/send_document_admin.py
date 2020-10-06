@@ -8,6 +8,9 @@ from ..models import SendDocument
 
 from .modeladmin_mixins import ModelAdminMixin
 
+from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
+
+
 
 @admin.register(SendDocument, site=document_tracking_admin)
 class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
@@ -26,3 +29,15 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'comment',
                 'action_date')}),
         audit_fieldset_tuple)
+
+    radio_fields = {
+        "department": admin.VERTICAL,
+        "status": admin.VERTICAL,
+        "action_priority": admin.VERTICAL,
+    }
+
+    # autocomplete_fields = ['department']
+
+    list_filter = (
+        ('department', RelatedDropdownFilter),
+    )
