@@ -1,4 +1,5 @@
 from datetime import date
+from django.contrib.auth.models import User
 from django.db import models
 
 from edc_base.model_mixins import BaseUuidModel
@@ -6,6 +7,27 @@ from edc_base.sites.site_model_mixin import SiteModelMixin
 
 from bhp_personnel.models import Department, Employee
 from ..choices import DOCUMENT_STATUS
+
+
+class Courier(BaseUuidModel):
+
+    full_name = models.CharField(
+        verbose_name="Full name",
+        max_length=150)
+
+    cell = models.CharField(
+        verbose_name='Cell number',
+        max_length=50,
+        blank=True,
+        null=True,
+        unique=True)
+
+    email = models.EmailField(
+        blank=True,
+        null=True)
+
+    def __str__(self):
+        return f'{self.full_name}'
 
 
 class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
@@ -17,9 +39,25 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         blank=True,
         unique=True)
 
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(
+        Department,
+        related_name='document',
+        on_delete=models.CASCADE)
 
-    send_to = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    send_to = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    courier = models.ForeignKey(
+        Courier, blank=True, null=True,
+        on_delete=models.CASCADE)
+
+    final_destination = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE)
+
+    receiver_at_destination = models.ForeignKey(
+        User,
+        related_name='user',
+        on_delete=models.CASCADE)
 
     status = models.CharField(
         verbose_name="Status",

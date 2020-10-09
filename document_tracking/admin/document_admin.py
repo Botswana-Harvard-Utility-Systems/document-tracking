@@ -20,5 +20,13 @@ class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
             'fields': (
                 'doc_identifier',
                 'document_name',
-                'file')}),
+                'file',
+                'document_type',
+                'document_type_other',
+                'document_form')}),
         audit_fieldset_tuple)
+
+    radio_fields = {
+        'document_type': admin.VERTICAL,
+        'document_form': admin.VERTICAL,
+    }

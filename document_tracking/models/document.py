@@ -1,8 +1,10 @@
 from django.db import models
 
+from edc_base.model_fields import OtherCharField
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
 
+from ..choices import DOCUMENT_FORM, DOCUMENT_TYPE
 from ..identifiers import DocumentIdentifier
 
 
@@ -26,6 +28,22 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
     file = models.FileField(null=True,
                             blank=True,
                             upload_to='documents/')
+
+    document_type = models.CharField(
+        verbose_name="Document Type",
+        max_length=150,
+        blank=False,
+        null=True,
+        choices=DOCUMENT_TYPE)
+
+    document_type_other = OtherCharField()
+
+    document_form = models.CharField(
+        verbose_name="Document Form",
+        max_length=150,
+        blank=False,
+        null=True,
+        choices=DOCUMENT_FORM)
 
     def __str__(self):
         return f'{self.document_name}, {self.doc_identifier}'
