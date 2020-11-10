@@ -1,22 +1,24 @@
+from edc_constants.constants import OTHER
+
 DOCUMENT_STATUS = (
-    ('Sent', 'Sent'),
-    ('Received', 'Received'),
-    ('Processing', 'Processing'),
-    ('Processed', 'Processed')
+    ('sent', 'Sent'),
+    ('received', 'Received'),
+    ('processing', 'Processing'),
+    ('processed', 'Processed')
 )
 
 DOCUMENT_FORM = (
-    ('Soft-copy', 'Soft-copy'),
-    ('Hard-copy', 'Hard-copy'),
-    ('Both', 'Both'),
+    ('soft_copy', 'Soft-copy'),
+    ('hard_copy', 'Hard-copy'),
+    ('both', 'Both'),
 )
 
 DOCUMENT_TYPE = (
-    ('Contract', 'Contract'),
-    ('Timesheet', 'Timesheet'),
-    ('Letter', 'Letter'),
-    ('Purchase-Order', 'Purchase-Order'),
-    ('Invoice', 'Invoice'),
-    ('Report', 'Report'),
-    ('Other, specify: ', 'Other, specify: '),
+    ('contract', 'Contract'),
+    ('timesheet', 'Timesheet'),
+    ('letter', 'Letter'),
+    ('purchase_order', 'Purchase-Order'),
+    ('invoice', 'Invoice'),
+    ('report', 'Report'),
+    (OTHER, 'Other, specify: '),
 )

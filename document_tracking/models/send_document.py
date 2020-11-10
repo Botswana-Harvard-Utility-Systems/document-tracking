@@ -6,6 +6,7 @@ from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
 
 from bhp_personnel.models import Department, Employee
+from .document import Document
 from ..choices import DOCUMENT_STATUS
 
 
@@ -38,6 +39,8 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         null=True,
         blank=True,
         unique=True)
+
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
 
     department = models.ForeignKey(
         Department,
