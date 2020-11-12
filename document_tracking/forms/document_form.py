@@ -23,7 +23,7 @@ class DocumentFormValidator(FormValidator):
 
         if document_form == 'hard_copy' and file:
             message = {'file':
-                       'soft-copy file not required'}
+                       'Soft-copy file not required'}
             self._errors.update(message)
             raise ValidationError(message)
         else:
