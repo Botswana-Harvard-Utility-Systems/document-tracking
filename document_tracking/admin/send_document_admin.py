@@ -45,6 +45,7 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'courier',
                 'final_destination',
                 'receiver_at_destination',
+                'group',
                 'status',
                 'action_priority',
                 'comment',

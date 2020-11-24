@@ -1,4 +1,5 @@
 from datetime import date
+from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -41,6 +42,14 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         unique=True)
 
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
+
+    group = models.ForeignKey(
+        Group,
+        verbose_name='Choose Group',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        help_text='Group of people that can view this document')
 
     department = models.ForeignKey(
         Department,
