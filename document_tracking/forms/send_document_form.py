@@ -49,6 +49,7 @@ class SendDocumentForm(SiteModelFormMixin, FormValidatorMixin,
         label='Document Identifier',
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
+
     class Meta:
         model = SendDocument
         fields = '__all__'

@@ -41,8 +41,6 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         blank=True,
         unique=True)
 
-    document = models.ForeignKey(Document, on_delete=models.CASCADE)
-
     group = models.ForeignKey(
         Group,
         verbose_name='Choose Group',
@@ -64,18 +62,20 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
 
     final_destination = models.ForeignKey(
         Department,
+        null=True,
+        blank=True,
         on_delete=models.CASCADE)
 
     receiver_at_destination = models.ForeignKey(
         User,
+        null=True,
+        blank=True,
         related_name='user',
         on_delete=models.CASCADE)
 
     status = models.CharField(
         verbose_name="Status",
         max_length=20,
-        blank=True,
-        null=True,
         choices=DOCUMENT_STATUS)
 
     action_priority = models.CharField(

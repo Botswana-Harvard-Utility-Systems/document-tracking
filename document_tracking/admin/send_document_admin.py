@@ -39,7 +39,6 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
         (None, {
             'fields': (
                 'doc_identifier',
-                'document',
                 'department',
                 'send_to',
                 'courier',
