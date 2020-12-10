@@ -21,3 +21,9 @@ DOCUMENT_TYPE = (
     ('report', 'Report'),
     (OTHER, 'Other, specify: '),
 )
+
+PRIORITY = (
+    ('normal', 'Normal'),
+    ('Medium', 'Medium'),
+    ('high', 'High'),
+)

@@ -8,7 +8,7 @@ from edc_base.sites.site_model_mixin import SiteModelMixin
 
 from bhp_personnel.models import Department, Employee
 from .document import Document
-from ..choices import DOCUMENT_STATUS
+from ..choices import DOCUMENT_STATUS, PRIORITY
 
 
 class Courier(BaseUuidModel):
@@ -79,7 +79,7 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
 
     action_priority = models.CharField(
         max_length=35,
-        choices=(('normal', 'Normal'), ('Medium', 'Medium'), ('high', 'High')),
+        choices=PRIORITY,
         default='Normal')
 
     comment = models.TextField(
