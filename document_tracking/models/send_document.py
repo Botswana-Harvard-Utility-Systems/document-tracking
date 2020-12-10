@@ -38,8 +38,7 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         verbose_name="Document Identifier",
         max_length=36,
         null=True,
-        blank=True,
-        unique=True)
+        blank=True)
 
     group = models.ForeignKey(
         Group,
@@ -91,3 +90,6 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
     action_date = models.DateField(
         verbose_name='Action date',
         default=date.today, )
+
+    class Meta:
+        unique_together = ['doc_identifier', 'department', 'send_to']
