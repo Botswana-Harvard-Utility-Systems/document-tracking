@@ -59,6 +59,8 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     # autocomplete_fields = ['department']
 
+    filter_horizontal = ('group',)
+
     list_filter = (
         ('department', RelatedDropdownFilter),
     )

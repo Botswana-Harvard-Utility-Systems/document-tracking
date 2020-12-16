@@ -40,12 +40,9 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         null=True,
         blank=True)
 
-    group = models.ForeignKey(
+    group = models.ManyToManyField(
         Group,
         verbose_name='Choose Group',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
         help_text='Group of people that can view this document')
 
     department = models.ForeignKey(
