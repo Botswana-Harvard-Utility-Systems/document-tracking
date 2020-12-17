@@ -40,34 +40,14 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         null=True,
         blank=True)
 
-    group = models.ManyToManyField(
-        Group,
-        verbose_name='Choose Group',
-        help_text='Group of people that can view this document')
-
-    department = models.ForeignKey(
+    department = models.ManyToManyField(
         Department,
         related_name='document',
-        on_delete=models.CASCADE)
+        blank=True)
 
-    send_to = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    courier = models.ForeignKey(
-        Courier, blank=True, null=True,
-        on_delete=models.CASCADE)
-
-    final_destination = models.ForeignKey(
-        Department,
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE)
-
-    receiver_at_destination = models.ForeignKey(
+    send_to = models.ManyToManyField(
         User,
-        null=True,
-        blank=True,
-        related_name='user',
-        on_delete=models.CASCADE)
+        blank=True)
 
     status = models.CharField(
         verbose_name="Status",
@@ -86,7 +66,29 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
 
     action_date = models.DateField(
         verbose_name='Action date',
-        default=date.today, )
+        default=date.today,
+        blank=True,
+        null=True,
+    )
+
+    group = models.ManyToManyField(
+        Group,
+        verbose_name='Group of people that can view this document')
+
+    courier = models.ForeignKey(
+        Courier,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE)
+
+    final_destination = models.ManyToManyField(
+        Department,
+        blank=True,)
+
+    receiver_at_destination = models.ManyToManyField(
+        User,
+        blank=True,
+        related_name='user',)
 
     class Meta:
-        unique_together = ['doc_identifier', 'department', 'send_to']
+        unique_together = ['doc_identifier',]

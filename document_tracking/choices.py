@@ -15,9 +15,7 @@ DOCUMENT_FORM = (
 
 DOCUMENT_TYPE = (
     ('contract', 'Contract'),
-    ('timesheet', 'Timesheet'),
     ('letter', 'Letter'),
-    ('invoice', 'Invoice'),
     ('report', 'Report'),
     (OTHER, 'Other, specify: '),
 )

@@ -3,8 +3,8 @@ from django.contrib import admin
 from edc_model_admin import audit_fieldset_tuple
 
 from ..admin_site import document_tracking_admin
-from ..forms import DocumentForm
-from ..models import Document
+from ..forms import DocumentForm, StudyForm
+from ..models import Document, Study
 
 from .modeladmin_mixins import ModelAdminMixin
 
@@ -30,3 +30,9 @@ class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
         'document_type': admin.VERTICAL,
         'document_form': admin.VERTICAL,
     }
+
+
+@admin.register(Study, site=document_tracking_admin)
+class StudyAdmin(ModelAdminMixin, admin.ModelAdmin):
+
+    form = StudyForm

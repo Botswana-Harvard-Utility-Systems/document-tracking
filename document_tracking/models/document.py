@@ -8,6 +8,15 @@ from ..choices import DOCUMENT_FORM, DOCUMENT_TYPE
 from ..identifiers import DocumentIdentifier
 
 
+class Study(BaseUuidModel):
+
+    document_name = models.CharField(
+        verbose_name="Document Name",
+        max_length=150,
+        blank=False,
+        null=True)
+
+
 class Document(BaseUuidModel, SiteModelMixin, models.Model):
 
     identifier_cls = DocumentIdentifier
@@ -44,6 +53,13 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
         blank=False,
         null=True,
         choices=DOCUMENT_FORM)
+
+    study = models.ForeignKey(
+        Study,
+        on_delete=models.CASCADE,
+        verbose_name='Study',
+        blank=True,
+        null=True)
 
     def __str__(self):
         return f'{self.document_name}, {self.doc_identifier}'

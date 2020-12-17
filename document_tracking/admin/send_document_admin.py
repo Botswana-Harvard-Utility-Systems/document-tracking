@@ -41,14 +41,15 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'doc_identifier',
                 'department',
                 'send_to',
-                'courier',
-                'final_destination',
-                'receiver_at_destination',
-                'group',
                 'status',
                 'action_priority',
                 'comment',
-                'action_date')}),
+                'action_date',
+                'group',)}),
+        ('If Document is Hard Copy', {
+            'fields': ('courier',
+                       'receiver_at_destination',
+                       'final_destination')}),
         audit_fieldset_tuple)
 
     radio_fields = {
@@ -59,7 +60,8 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     # autocomplete_fields = ['department']
 
-    filter_horizontal = ('group',)
+    filter_horizontal = ('group', 'department', 'send_to',
+                         'receiver_at_destination', 'final_destination')
 
     list_filter = (
         ('department', RelatedDropdownFilter),
