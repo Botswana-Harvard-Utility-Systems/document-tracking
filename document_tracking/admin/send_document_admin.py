@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth import get_user
 
 from edc_model_admin import audit_fieldset_tuple
 
@@ -66,3 +67,9 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
     list_filter = (
         ('department', RelatedDropdownFilter),
     )
+
+    def has_change_permission(self, request, obj=None):
+        user_created = obj.user_created if obj else None
+        if user_created and user_created != get_user(request).username:
+            return False
+        return True
