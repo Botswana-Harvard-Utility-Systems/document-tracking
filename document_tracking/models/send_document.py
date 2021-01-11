@@ -54,7 +54,7 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         max_length=20,
         choices=DOCUMENT_STATUS)
 
-    action_priority = models.CharField(
+    priority = models.CharField(
         max_length=35,
         choices=PRIORITY,
         default='Normal')
@@ -73,7 +73,9 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
 
     group = models.ManyToManyField(
         Group,
-        verbose_name='Group of people that can view this document')
+        verbose_name='Group of people that can view this document',
+        null=True,
+        blank=True)
 
     courier = models.ForeignKey(
         Courier,
@@ -89,6 +91,28 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         User,
         blank=True,
         related_name='user',)
+
+    def get_sent_to(self):
+        sent_to_list = ''
+        for sent_to in self.send_to.all():
+            sent_to_list = sent_to_list + sent_to.username + ','
+        return sent_to_list[:-1]
+
+    def get_final_dest(self):
+        final_dest_list = ''
+        for final_dest in self.final_destination.all():
+            final_dest_list = final_dest_list + final_dest.dept_name + ','
+        return final_dest_list[:-1]
+
+    def get_final_dest_rec(self):
+        final_dest_rec_list = ''
+        for final_dest_rec in self.receiver_at_destination.all():
+            final_dest_rec_list = final_dest_rec_list + final_dest_rec.username + ','
+        return final_dest_rec_list[:-1]
+
+    def save(self, *args, **kwargs):
+        self.status = 'sent'
+        super(SendDocument, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ['doc_identifier',]

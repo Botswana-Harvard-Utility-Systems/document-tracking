@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user
+from django.contrib.auth.models import User
 
 from edc_model_admin import audit_fieldset_tuple
 
@@ -43,7 +44,7 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'department',
                 'send_to',
                 'status',
-                'action_priority',
+                'priority',
                 'comment',
                 'action_date',
                 'group',)}),
@@ -56,7 +57,7 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
     radio_fields = {
         # "department": admin.VERTICAL,
         "status": admin.VERTICAL,
-        "action_priority": admin.VERTICAL,
+        "priority": admin.VERTICAL,
     }
 
     # autocomplete_fields = ['department']
@@ -68,8 +69,17 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
         ('department', RelatedDropdownFilter),
     )
 
-    def has_change_permission(self, request, obj=None):
-        user_created = obj.user_created if obj else None
-        if user_created and user_created != get_user(request).username:
-            return False
-        return True
+    # def get_readonly_fields(self, request, obj=None):
+    #     fields = super().get_readonly_fields(request, obj)
+    #     # username = None
+    #     if request.user.is_authenticated:
+    #         user_created = obj.user_created if obj else None
+    #         # username = SendDocument.objects.get()
+    #         if user_created and user_created == get_user(request).username:
+    #             fields = ('status', ) + fields
+    #         else:
+    #             fields = ('department', 'send_to', 'priority', 'comment',
+    #                       'action_date', 'group', 'courier', 'doc_identifier',
+    #                       'receiver_at_destination', 'final_destination') \
+    #                      + fields
+    #     return fields

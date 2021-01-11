@@ -2,9 +2,7 @@ from edc_constants.constants import OTHER
 
 DOCUMENT_STATUS = (
     ('sent', 'Sent'),
-    ('received', 'Received'),
-    ('processing', 'Processing'),
-    ('processed', 'Processed')
+    ('received', 'Received')
 )
 
 DOCUMENT_FORM = (
