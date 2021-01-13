@@ -69,6 +69,11 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
         ('department', RelatedDropdownFilter),
     )
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(SendDocumentAdmin, self).get_form(request, obj, **kwargs)
+        form.request = request
+        return form
+
     # def get_readonly_fields(self, request, obj=None):
     #     fields = super().get_readonly_fields(request, obj)
     #     # username = None

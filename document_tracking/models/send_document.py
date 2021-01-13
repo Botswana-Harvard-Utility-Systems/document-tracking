@@ -52,6 +52,7 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
     status = models.CharField(
         verbose_name="Status",
         max_length=20,
+        default='sent',
         choices=DOCUMENT_STATUS)
 
     priority = models.CharField(
@@ -73,9 +74,7 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
 
     group = models.ManyToManyField(
         Group,
-        verbose_name='Group of people that can view this document',
-        null=True,
-        blank=True)
+        verbose_name='Group of people that can view this document',)
 
     courier = models.ForeignKey(
         Courier,
@@ -91,6 +90,12 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         User,
         blank=True,
         related_name='user',)
+
+    received_by = models.CharField(
+        verbose_name='Received By',
+        max_length=100,
+        blank=True,
+        null=True)
 
     def get_sent_to(self):
         sent_to_list = ''
@@ -111,7 +116,6 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         return final_dest_rec_list[:-1]
 
     def save(self, *args, **kwargs):
-        self.status = 'sent'
         super(SendDocument, self).save(*args, **kwargs)
 
     class Meta:

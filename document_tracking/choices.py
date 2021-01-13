@@ -19,7 +19,7 @@ DOCUMENT_TYPE = (
 )
 
 PRIORITY = (
-    ('normal', 'Normal'),
+    ('low', 'Low'),
     ('Medium', 'Medium'),
     ('high', 'High'),
 )
