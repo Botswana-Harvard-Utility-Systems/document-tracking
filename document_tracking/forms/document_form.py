@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from edc_base.sites import SiteModelFormMixin
 from edc_form_validators import FormValidator, FormValidatorMixin
 
-from ..models import Document, Study
+from ..models import Document
 
 
 class DocumentFormValidator(FormValidator):
@@ -45,11 +45,4 @@ class DocumentForm(SiteModelFormMixin, FormValidatorMixin, forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = '__all__'
-
-
-class StudyForm(SiteModelFormMixin, forms.ModelForm):
-
-    class Meta:
-        model = Study
         fields = '__all__'

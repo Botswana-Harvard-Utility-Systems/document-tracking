@@ -8,7 +8,7 @@ from ..choices import DOCUMENT_FORM, DOCUMENT_TYPE
 from ..identifiers import DocumentIdentifier
 
 
-class Document(BaseUuidModel, SiteModelMixin, models.Model):
+class HardCopyDocument(BaseUuidModel, SiteModelMixin, models.Model):
 
     identifier_cls = DocumentIdentifier
 
@@ -24,10 +24,6 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
         max_length=150,
         blank=False,
         null=True)
-
-    file = models.FileField(null=True,
-                            blank=True,
-                            upload_to='documents/')
 
     document_type = models.CharField(
         verbose_name="Document Type",
@@ -51,4 +47,5 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.doc_identifier = self.identifier_cls().identifier
+            self.document_form = 'hard_copy'
         super().save(*args, **kwargs)

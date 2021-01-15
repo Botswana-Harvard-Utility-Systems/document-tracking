@@ -8,7 +8,6 @@ DOCUMENT_STATUS = (
 DOCUMENT_FORM = (
     ('soft_copy', 'Soft-copy'),
     ('hard_copy', 'Hard-copy'),
-    ('both', 'Both'),
 )
 
 DOCUMENT_TYPE = (

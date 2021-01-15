@@ -4,16 +4,16 @@ from django.contrib.auth import get_user
 from edc_model_admin import audit_fieldset_tuple
 
 from ..admin_site import document_tracking_admin
-from ..forms import DocumentForm
-from ..models import Document
+from ..forms import HardCopyDocumentForm
+from ..models import HardCopyDocument
 
 from .modeladmin_mixins import ModelAdminMixin
 
 
-@admin.register(Document, site=document_tracking_admin)
-class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
+@admin.register(HardCopyDocument, site=document_tracking_admin)
+class HardCopyDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
 
-    form = DocumentForm
+    form = HardCopyDocumentForm
     search_fields = ['doc_identifier']
 
     fieldsets = (
@@ -21,15 +21,12 @@ class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
             'fields': (
                 'doc_identifier',
                 'document_name',
-                'file',
                 'document_type',
-                'document_type_other',
-                'document_form',)}),
+                'document_type_other',)}),
         audit_fieldset_tuple)
 
     radio_fields = {
         'document_type': admin.VERTICAL,
-        'document_form': admin.VERTICAL,
     }
 
     def has_change_permission(self, request, obj=None):
@@ -37,4 +34,3 @@ class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
         if user_created and user_created != get_user(request).username:
             return False
         return True
-

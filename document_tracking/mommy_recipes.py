@@ -22,9 +22,9 @@ senddocument = Recipe(
     SendDocument,
     doc_identifier='D99XXY4A',
     status='sent',
-    action_priority='high',
+    priority='high',
     comment='blah',
-    action_date=get_utcnow(),
+    sent_date=get_utcnow(),
 )
 
 courier = Recipe(

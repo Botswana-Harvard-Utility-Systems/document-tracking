@@ -5,18 +5,36 @@ from django.contrib.auth.models import User
 from edc_model_admin import audit_fieldset_tuple
 
 from ..admin_site import document_tracking_admin
-from ..forms import CourierForm, SendDocumentForm
-from ..models import Courier, SendDocument
+from ..forms import CourierForm, SendHardCopyForm
+from ..models import Courier, SendHardCopy
 
 from .modeladmin_mixins import ModelAdminMixin
 
 from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
 
 
-@admin.register(SendDocument, site=document_tracking_admin)
+@admin.register(Courier, site=document_tracking_admin)
+class CourierAdmin(
+        ModelAdminMixin, admin.ModelAdmin):
+
+    form = CourierForm
+
+    fieldsets = (
+        (None, {
+            'fields': (
+                'full_name',
+                'cell',
+                'email',
+            )}),
+        audit_fieldset_tuple)
+
+    search_fields = ['full_name', 'cell', 'email',]
+
+
+@admin.register(SendHardCopy, site=document_tracking_admin)
 class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
 
-    form = SendDocumentForm
+    form = SendHardCopyForm
     search_fields = ['doc_identifier']
 
     fieldsets = (
@@ -25,22 +43,24 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'doc_identifier',
                 'department',
                 'send_to',
+                'reception',
                 'status',
                 'priority',
                 'comment',
                 'sent_date',
-                'group',)}),
+                'courier',
+                'secondary_recep',)}),
         audit_fieldset_tuple)
 
     radio_fields = {
-        # "department": admin.VERTICAL,
+        "reception": admin.VERTICAL,
+        "courier": admin.VERTICAL,
+        "secondary_recep": admin.VERTICAL,
         "status": admin.VERTICAL,
         "priority": admin.VERTICAL,
     }
 
     # autocomplete_fields = ['department']
-
-    filter_horizontal = ('send_to', 'group',)
 
     list_filter = (
         ('department', RelatedDropdownFilter),
