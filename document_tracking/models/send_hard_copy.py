@@ -37,6 +37,7 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
     doc_identifier = models.CharField(
         verbose_name="Document Identifier",
         max_length=36,
+        unique=True,
         null=True,
         blank=True)
 
@@ -88,19 +89,17 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
         blank=True,
         null=True,)
 
-    courier = models.ForeignKey(
-        Courier,
+    courier = models.CharField(
+        verbose_name='Courier',
+        max_length=20,
         blank=True,
-        null=True,
-        on_delete=models.CASCADE)
+        null=True)
 
-    secondary_recep = models.ForeignKey(
-        Group,
-        related_name='secondary_recep',
-        on_delete=models.SET_NULL,
-        verbose_name='Reception',
-        null=True,
-        blank=True)
+    secondary_recep = models.CharField(
+        verbose_name='Secondary Reception',
+        max_length=20,
+        blank=True,
+        null=True)
 
     secondary_recep_received = models.CharField(
         verbose_name='Personnel received at Secondary reception',
@@ -113,12 +112,6 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
         max_length=100,
         blank=True,
         null=True)
-
-    def get_sent_to(self):
-        sent_to_list = ''
-        for sent_to in self.send_to.all():
-            sent_to_list = sent_to_list + sent_to.username + ','
-        return sent_to_list[:-1]
 
     class Meta:
         app_label = 'document_tracking'

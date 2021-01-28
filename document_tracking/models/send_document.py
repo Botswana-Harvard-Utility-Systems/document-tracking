@@ -75,6 +75,3 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         for group in self.group.all():
             group_list = group_list + group.name + ','
         return group_list[:-1]
-
-    class Meta:
-        unique_together = ['doc_identifier',]

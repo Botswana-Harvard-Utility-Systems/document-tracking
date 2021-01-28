@@ -32,7 +32,7 @@ class CourierAdmin(
 
 
 @admin.register(SendHardCopy, site=document_tracking_admin)
-class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
+class SendHardCopyAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     form = SendHardCopyForm
     search_fields = ['doc_identifier']
@@ -44,18 +44,19 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'department',
                 'send_to',
                 'reception',
+                'recep_received',
                 'status',
                 'priority',
                 'comment',
                 'sent_date',
                 'courier',
-                'secondary_recep',)}),
+                'secondary_recep',
+                'secondary_recep_received',
+                'received_by',)}),
         audit_fieldset_tuple)
 
     radio_fields = {
         "reception": admin.VERTICAL,
-        "courier": admin.VERTICAL,
-        "secondary_recep": admin.VERTICAL,
         "status": admin.VERTICAL,
         "priority": admin.VERTICAL,
     }
@@ -67,6 +68,6 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
     )
 
     def get_form(self, request, obj=None, **kwargs):
-        form = super(SendDocumentAdmin, self).get_form(request, obj, **kwargs)
+        form = super(SendHardCopyAdmin, self).get_form(request, obj, **kwargs)
         form.request = request
         return form

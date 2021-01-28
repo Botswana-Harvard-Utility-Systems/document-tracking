@@ -15,15 +15,26 @@ class SendHardCopyForm(SiteModelFormMixin, FormValidatorMixin,
         label='Document Identifier',
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
-    # def check_user(self):
-    #
-    #     if self.instance.user_created != self.request.user:
-    #         doc_identifier = forms.CharField(
-    #             required=False,
-    #             label='Document Identifier',
-    #             widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    recep_received = forms.CharField(
+        required=False,
+        label='Receiver At Reception',
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
-    disabled_fields = ['status']
+    secondary_recep_received = forms.CharField(
+        required=False,
+        label='Secondary Reception Receiver',
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
+    received_by = forms.CharField(
+        required=False,
+        label='Receiver At Destination',
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
+    user_created_disabled_fields = ['status', 'courier', 'secondary_recep']
+    bhp_hq_disabled_fields = ['department', 'send_to', 'reception', 'status',
+                              'priority', 'sent_date']
+    other_fields = ['department', 'send_to', 'reception', 'status', 'comment',
+                    'priority', 'sent_date', 'courier', 'secondary_recep']
 
     class Meta:
         model = SendHardCopy
@@ -35,8 +46,17 @@ class SendHardCopyForm(SiteModelFormMixin, FormValidatorMixin,
         instance = getattr(self, 'instance', None)
 
         if instance.user_created == self.request.user.username:
-            for field in self.disabled_fields:
+            for field in self.user_created_disabled_fields:
                 self.fields[field].disabled = True
+
+        elif self.request.user.groups.filter(name='BHP HQ').exists():
+            for field in self.bhp_hq_disabled_fields:
+                self.fields[field].disabled = True
+
+        elif instance.received_by == self.request.user.username:
+            for field in self.other_fields:
+                self.fields[field].disabled = True
+
         else:
             pass
 
