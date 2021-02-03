@@ -30,11 +30,11 @@ class SendHardCopyForm(SiteModelFormMixin, FormValidatorMixin,
         label='Receiver At Destination',
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
-    user_created_disabled_fields = ['status', 'courier', 'secondary_recep']
-    bhp_hq_disabled_fields = ['department', 'send_to', 'reception', 'status',
-                              'priority', 'sent_date']
-    other_fields = ['department', 'send_to', 'reception', 'status', 'comment',
-                    'priority', 'sent_date', 'courier', 'secondary_recep']
+    user_created_disabled_fields = ['courier']
+    bhp_hq_disabled_fields = ['department', 'send_to', 'reception',
+                              'priority']
+    other_fields = ['department', 'send_to', 'reception', 'comment',
+                    'priority', 'courier', 'secondary_recep']
 
     class Meta:
         model = SendHardCopy

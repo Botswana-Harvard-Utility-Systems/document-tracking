@@ -70,6 +70,8 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
     status = models.CharField(
         verbose_name="Status",
         max_length=20,
+        blank=True,
+        null=True,
         default='sent',
         choices=DOCUMENT_STATUS)
 
@@ -84,10 +86,7 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
         null=True,)
 
     sent_date = models.DateField(
-        verbose_name='Sent date',
-        default=date.today,
-        blank=True,
-        null=True,)
+        default=date.today)
 
     courier = models.CharField(
         verbose_name='Courier',
@@ -95,11 +94,13 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
         blank=True,
         null=True)
 
-    secondary_recep = models.CharField(
-        verbose_name='Secondary Reception',
-        max_length=20,
-        blank=True,
-        null=True)
+    secondary_recep = models.ForeignKey(
+        Group,
+        on_delete=models.SET_NULL,
+        related_name='destination_reception',
+        verbose_name='Destination Reception',
+        null=True,
+        blank=True)
 
     secondary_recep_received = models.CharField(
         verbose_name='Personnel received at Secondary reception',

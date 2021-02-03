@@ -44,11 +44,8 @@ class SendHardCopyAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'department',
                 'send_to',
                 'reception',
-                'recep_received',
-                'status',
                 'priority',
                 'comment',
-                'sent_date',
                 'courier',
                 'secondary_recep',
                 'secondary_recep_received',
@@ -57,7 +54,7 @@ class SendHardCopyAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     radio_fields = {
         "reception": admin.VERTICAL,
-        "status": admin.VERTICAL,
+        "secondary_recep": admin.VERTICAL,
         "priority": admin.VERTICAL,
     }
 
