@@ -48,6 +48,7 @@ class SendHardCopyAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'comment',
                 'courier',
                 'secondary_recep',
+                'handed_over',
                 'secondary_recep_received',
                 'received_by',)}),
         audit_fieldset_tuple)

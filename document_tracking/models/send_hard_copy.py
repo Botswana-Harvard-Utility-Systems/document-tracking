@@ -102,6 +102,11 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
         null=True,
         blank=True)
 
+    handed_over = models.BooleanField(
+        default=False,
+        blank=True,
+        null=True)
+
     secondary_recep_received = models.CharField(
         verbose_name='Personnel received at Secondary reception',
         max_length=100,

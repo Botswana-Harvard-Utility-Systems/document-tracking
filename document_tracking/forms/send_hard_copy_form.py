@@ -37,6 +37,11 @@ class SendHardCopyForm(SiteModelFormMixin, FormValidatorMixin,
         label='Receiver At Reception',
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
+    handed_over = forms.CharField(
+        required=False,
+        label='Handed-Over',
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
     secondary_recep_received = forms.CharField(
         required=False,
         label='Secondary Reception Receiver',
