@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from edc_base.sites import SiteModelFormMixin
 from edc_form_validators import FormValidator, FormValidatorMixin
@@ -7,8 +8,24 @@ from ..models import Courier
 from ..models import SendHardCopy
 
 
+class SendHardCopyFormValidator(FormValidator):
+
+    def clean(self):
+
+        reception = self.cleaned_data.get('reception')
+        secondary_recep = self.cleaned_data.get('secondary_recep')
+
+        if reception and not secondary_recep:
+            message = {'reception':
+                       'Please specify destination reception'}
+            self._errors.update(message)
+            raise ValidationError(message)
+
+
 class SendHardCopyForm(SiteModelFormMixin, FormValidatorMixin,
                        forms.ModelForm):
+
+    form_validator_cls = SendHardCopyFormValidator
 
     doc_identifier = forms.CharField(
         required=False,
