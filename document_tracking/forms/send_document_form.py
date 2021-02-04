@@ -20,8 +20,18 @@ class SendDocumentFormValidator(FormValidator):
     def clean(self):
         super().clean()
         doc_identifier = self.cleaned_data.get('doc_identifier')
-
+        send_to = self.cleaned_data.get('send_to')
+        department = self.cleaned_data.get('department')
         courier = self.cleaned_data.get('courier')
+
+        if not (send_to or department):
+            message = {'department':
+                       'Please select a department or personnel you '
+                       'want to send this document to'}
+            self._errors.update(message)
+            raise ValidationError(message)
+        else:
+            pass
 
         try:
             document = self.document_cls.objects.get(
@@ -49,30 +59,9 @@ class SendDocumentForm(SiteModelFormMixin, FormValidatorMixin,
         label='Document Identifier',
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
-    # def check_user(self):
-    #
-    #     if self.instance.user_created != self.request.user:
-    #         doc_identifier = forms.CharField(
-    #             required=False,
-    #             label='Document Identifier',
-    #             widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-
-    disabled_fields = ['status']
-
     class Meta:
         model = SendDocument
         fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-
-        super(SendDocumentForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-
-        if instance.user_created == self.request.user.username:
-            for field in self.disabled_fields:
-                self.fields[field].disabled = True
-        else:
-            pass
 
 
 class CourierForm(forms.ModelForm):

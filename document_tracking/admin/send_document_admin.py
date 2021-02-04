@@ -25,7 +25,6 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
                 'doc_identifier',
                 'department',
                 'send_to',
-                'status',
                 'priority',
                 'comment',
                 'sent_date',
@@ -34,13 +33,12 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     radio_fields = {
         # "department": admin.VERTICAL,
-        "status": admin.VERTICAL,
         "priority": admin.VERTICAL,
     }
 
     # autocomplete_fields = ['department']
 
-    filter_horizontal = ('send_to', 'group',)
+    filter_horizontal = ('send_to', 'group', 'department')
 
     list_filter = (
         ('department', RelatedDropdownFilter),

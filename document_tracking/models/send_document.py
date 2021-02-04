@@ -19,11 +19,8 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         null=True,
         blank=True)
 
-    department = models.ForeignKey(
+    department = models.ManyToManyField(
         Department,
-        on_delete=models.SET_NULL,
-        related_name='document',
-        null=True,
         blank=True)
 
     send_to = models.ManyToManyField(
@@ -47,7 +44,7 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         null=True,)
 
     sent_date = models.DateField(
-        verbose_name='Action date',
+        verbose_name='Sent date',
         default=date.today,
         blank=True,
         null=True,
@@ -63,6 +60,12 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         max_length=100,
         blank=True,
         null=True)
+
+    def get_dept(self):
+        dept_list = ''
+        for dept in self.department.all():
+            dept_list = dept_list + dept.dept_name + ','
+        return dept_list[:-1]
 
     def get_sent_to(self):
         sent_to_list = ''
