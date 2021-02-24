@@ -69,7 +69,7 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
 
     status = models.CharField(
         verbose_name="Status",
-        max_length=20,
+        max_length=70,
         blank=True,
         null=True,
         default='sent',

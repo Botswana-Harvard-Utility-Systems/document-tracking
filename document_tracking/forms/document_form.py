@@ -1,9 +1,11 @@
 from django import forms
 
+from django.contrib.auth import settings
 from django.core.exceptions import ValidationError
+from django.template.defaultfilters import filesizeformat
+from django.utils.translation import ugettext_lazy as _
 from edc_base.sites import SiteModelFormMixin
 from edc_form_validators import FormValidator, FormValidatorMixin
-
 from ..models import Document
 
 
@@ -16,10 +18,16 @@ class DocumentFormValidator(FormValidator):
         document_form = self.cleaned_data.get('document_form')
 
         if document_form in ['soft_copy', 'both'] and not file:
+
             message = {'file':
                        'Please Upload file'}
             self._errors.update(message)
             raise ValidationError(message)
+
+        if file and file.size > 10485760:
+            msg = {'file':
+                       'The maximum file size that can be uploaded is 20MB'}
+            raise forms.ValidationError(msg)
 
         if document_form == 'hard_copy' and file:
             message = {'file':
