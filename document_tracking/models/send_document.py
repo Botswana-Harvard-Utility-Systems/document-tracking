@@ -5,19 +5,26 @@ from django.db import models
 
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
-
+from edc_search.model_mixins import SearchSlugModelMixin
 from bhp_personnel.models import Department, Employee
 from .document import Document
 from ..choices import DOCUMENT_STATUS, PRIORITY
 
 
-class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
+class SendDocument(BaseUuidModel, SearchSlugModelMixin,
+                   SiteModelMixin, models.Model):
 
     doc_identifier = models.CharField(
         verbose_name="Document Identifier",
         max_length=36,
         null=True,
         blank=True)
+
+    document_name = models.CharField(
+        verbose_name="Document Name",
+        max_length=150,
+        blank=False,
+        null=True)
 
     department = models.ManyToManyField(
         Department,
@@ -47,8 +54,7 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         verbose_name='Sent date',
         default=date.today,
         blank=True,
-        null=True,
-    )
+        null=True)
 
     group = models.ManyToManyField(
         Group,
@@ -78,3 +84,19 @@ class SendDocument(BaseUuidModel, SiteModelMixin, models.Model):
         for group in self.group.all():
             group_list = group_list + group.name + ','
         return group_list[:-1]
+
+    def get_search_slug_fields(self):
+        fields = super().get_search_slug_fields()
+        fields.append('document_name')
+        fields.append
+        return fields
+
+    def save(self, *args, **kwargs):
+        try:
+            doc_obj = Document.objects.get(doc_identifier=self.doc_identifier)
+        except Document.DoesNotExist:
+            raise
+        else:
+            self.document_name = doc_obj.document_name
+
+        super().save(*args, **kwargs)
