@@ -59,6 +59,11 @@ class SendDocumentForm(SiteModelFormMixin, FormValidatorMixin,
         label='Document Identifier',
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
+    transaction_identifier = forms.CharField(
+        required=False,
+        label='Transaction Identifier',
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
     class Meta:
         model = SendDocument
         fields = '__all__'

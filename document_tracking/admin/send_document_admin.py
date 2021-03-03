@@ -23,6 +23,7 @@ class SendDocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
         (None, {
             'fields': (
                 'doc_identifier',
+                'transaction_identifier',
                 'department',
                 'send_to',
                 'priority',

@@ -7,16 +7,26 @@ from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_search.model_mixins import SearchSlugModelMixin
 from bhp_personnel.models import Department, Employee
+
 from .document import Document
 from .proxy_user import ProxyUser
 from ..choices import DOCUMENT_STATUS, PRIORITY
+from ..identifiers import TransactionIdentifier
 
 
 class SendDocument(BaseUuidModel, SearchSlugModelMixin,
                    SiteModelMixin, models.Model):
 
+    identifier_cls = TransactionIdentifier
+
     doc_identifier = models.CharField(
         verbose_name="Document Identifier",
+        max_length=36,
+        null=True,
+        blank=True)
+
+    transaction_identifier = models.CharField(
+        verbose_name="Transaction Identifier",
         max_length=36,
         null=True,
         blank=True)
@@ -89,10 +99,11 @@ class SendDocument(BaseUuidModel, SearchSlugModelMixin,
     def get_search_slug_fields(self):
         fields = super().get_search_slug_fields()
         fields.append('document_name')
-        fields.append
         return fields
 
     def save(self, *args, **kwargs):
+        if not self.id:
+            self.transaction_identifier = self.identifier_cls().identifier
         try:
             doc_obj = Document.objects.get(doc_identifier=self.doc_identifier)
         except Document.DoesNotExist:
