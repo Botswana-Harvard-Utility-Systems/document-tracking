@@ -52,6 +52,11 @@ class SendHardCopyForm(SiteModelFormMixin, FormValidatorMixin,
         label='Receiver At Destination',
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
+    courier = forms.CharField(
+        required=False,
+        label='Courier',
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
     user_created_disabled_fields = ['courier']
     bhp_hq_disabled_fields = ['department', 'send_to', 'reception',
                               'priority']
@@ -61,26 +66,6 @@ class SendHardCopyForm(SiteModelFormMixin, FormValidatorMixin,
     class Meta:
         model = SendHardCopy
         fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-
-        super(SendHardCopyForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-
-        if instance.user_created == self.request.user.username:
-            for field in self.user_created_disabled_fields:
-                self.fields[field].disabled = True
-
-        elif self.request.user.groups.filter(name='BHP HQ').exists():
-            for field in self.bhp_hq_disabled_fields:
-                self.fields[field].disabled = True
-
-        elif instance.received_by == self.request.user.username:
-            for field in self.other_fields:
-                self.fields[field].disabled = True
-
-        else:
-            pass
 
 
 class CourierForm(forms.ModelForm):
