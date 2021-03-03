@@ -67,6 +67,7 @@ class SendHardCopy(BaseUuidModel, SearchSlugModelMixin,
         Group,
         on_delete=models.SET_NULL,
         verbose_name='Reception',
+        limit_choices_to=models.Q(name__icontains='reception'),
         null=True,
         blank=True)
 
@@ -108,6 +109,7 @@ class SendHardCopy(BaseUuidModel, SearchSlugModelMixin,
         on_delete=models.SET_NULL,
         related_name='destination_reception',
         verbose_name='Destination Reception',
+        limit_choices_to=models.Q(name__icontains='reception'),
         null=True,
         blank=True)
 
