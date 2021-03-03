@@ -35,7 +35,8 @@ class CourierAdmin(
 class SendHardCopyAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     form = SendHardCopyForm
-    search_fields = ['doc_identifier']
+    search_fields = ['doc_identifier', 'status', 'recep_received', 'comment',
+                     'courier', 'received_by']
 
     fieldsets = (
         (None, {

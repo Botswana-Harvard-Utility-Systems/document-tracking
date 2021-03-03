@@ -6,8 +6,12 @@ from django.db import models
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_search.model_mixins import SearchSlugModelMixin
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c529b83814e7c7bbea7644804f67a7eebc3557e
 from bhp_personnel.models import Department, Employee
-from .document import Document
+from .proxy_user import ProxyUser
 from ..choices import DOCUMENT_STATUS, PRIORITY
 
 
@@ -56,7 +60,7 @@ class SendHardCopy(BaseUuidModel, SearchSlugModelMixin,
         blank=True)
 
     send_to = models.ForeignKey(
-        User,
+        ProxyUser,
         on_delete=models.SET_NULL,
         null=True,
         blank=True)
@@ -129,7 +133,12 @@ class SendHardCopy(BaseUuidModel, SearchSlugModelMixin,
     def get_search_slug_fields(self):
         fields = super().get_search_slug_fields()
         fields.append('document_name')
-        fields.append
+        fields.append('doc_identifier')
+        fields.append('status')
+        fields.append('recep_received')
+        fields.append('comment')
+        fields.append('courier')
+        fields.append('received_by')
         return fields
 
     def save(self, *args, **kwargs):
