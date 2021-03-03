@@ -6,10 +6,7 @@ from django.db import models
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_search.model_mixins import SearchSlugModelMixin
-<<<<<<< HEAD
-=======
 
->>>>>>> 0c529b83814e7c7bbea7644804f67a7eebc3557e
 from bhp_personnel.models import Department, Employee
 from .proxy_user import ProxyUser
 from ..choices import DOCUMENT_STATUS, PRIORITY
