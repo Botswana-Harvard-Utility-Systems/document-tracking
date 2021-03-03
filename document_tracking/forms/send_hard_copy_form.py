@@ -21,6 +21,13 @@ class SendHardCopyFormValidator(FormValidator):
             self._errors.update(message)
             raise ValidationError(message)
 
+        if reception == secondary_recep:
+            message = {'reception':
+                       'Sending reception cannot be the same as destination'
+                       ' reception'}
+            self._errors.update(message)
+            raise ValidationError(message)
+
 
 class SendHardCopyForm(SiteModelFormMixin, FormValidatorMixin,
                        forms.ModelForm):
