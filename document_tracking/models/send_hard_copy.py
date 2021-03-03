@@ -9,6 +9,7 @@ from edc_search.model_mixins import SearchSlugModelMixin
 
 from bhp_personnel.models import Department, Employee
 from .proxy_user import ProxyUser
+from .document import Document
 from ..choices import DOCUMENT_STATUS, PRIORITY
 
 
