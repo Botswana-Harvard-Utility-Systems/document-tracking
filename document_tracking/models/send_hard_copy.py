@@ -41,7 +41,7 @@ class SendHardCopy(BaseUuidModel, SearchSlugModelMixin,
         unique=True,
         null=True,
         blank=True)
-    
+
     document_name = models.CharField(
         verbose_name="Document Name",
         max_length=150,

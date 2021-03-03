@@ -29,7 +29,6 @@ class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     radio_fields = {
         'document_type': admin.VERTICAL,
-        'document_form': admin.VERTICAL,
     }
 
     def has_change_permission(self, request, obj=None):

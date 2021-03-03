@@ -4,7 +4,7 @@ from edc_base.model_fields import OtherCharField
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
 
-from ..choices import DOCUMENT_FORM, DOCUMENT_TYPE
+from ..choices import DOCUMENT_TYPE
 from ..identifiers import DocumentIdentifier
 
 
@@ -42,8 +42,7 @@ class Document(BaseUuidModel, SiteModelMixin, models.Model):
         verbose_name="Document Form",
         max_length=150,
         blank=False,
-        null=False,
-        choices=DOCUMENT_FORM)
+        null=False)
 
     def __str__(self):
         return f'{self.document_name}, {self.doc_identifier}'

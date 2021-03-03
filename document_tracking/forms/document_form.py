@@ -51,6 +51,11 @@ class DocumentForm(SiteModelFormMixin, FormValidatorMixin, forms.ModelForm):
         label='Document Identifier',
         widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
+    document_form = forms.CharField(
+        required=False,
+        label='Document Form',
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
     class Meta:
         model = Document
         fields = '__all__'
