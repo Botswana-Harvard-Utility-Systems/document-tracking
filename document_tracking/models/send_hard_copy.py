@@ -40,6 +40,12 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
         unique=True,
         null=True,
         blank=True)
+    
+    document_name = models.CharField(
+        verbose_name="Document Name",
+        max_length=150,
+        blank=False,
+        null=True)
 
     department = models.ForeignKey(
         Department,
@@ -118,6 +124,22 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
         max_length=100,
         blank=True,
         null=True)
+
+    def get_search_slug_fields(self):
+        fields = super().get_search_slug_fields()
+        fields.append('document_name')
+        fields.append
+        return fields
+
+    def save(self, *args, **kwargs):
+        try:
+            doc_obj = Document.objects.get(doc_identifier=self.doc_identifier)
+        except Document.DoesNotExist:
+            raise
+        else:
+            self.document_name = doc_obj.document_name
+
+        super().save(*args, **kwargs)
 
     class Meta:
         app_label = 'document_tracking'
