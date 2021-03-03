@@ -14,7 +14,8 @@ from .modeladmin_mixins import ModelAdminMixin
 class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     form = DocumentForm
-    search_fields = ['doc_identifier']
+    search_fields = ['doc_identifier', 'document_name', 'document_type',
+                     'document_type_other']
 
     fieldsets = (
         (None, {
