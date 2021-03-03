@@ -5,9 +5,9 @@ from django.db import models
 
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
+from edc_search.model_mixins import SearchSlugModelMixin
 
 from bhp_personnel.models import Department, Employee
-from .document import Document
 from ..choices import DOCUMENT_STATUS, PRIORITY
 
 
@@ -32,7 +32,8 @@ class Courier(BaseUuidModel):
         return f'{self.full_name}'
 
 
-class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
+class SendHardCopy(BaseUuidModel, SearchSlugModelMixin,
+                   SiteModelMixin, models.Model):
 
     doc_identifier = models.CharField(
         verbose_name="Document Identifier",
@@ -118,6 +119,16 @@ class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
         max_length=100,
         blank=True,
         null=True)
+
+    def get_search_slug_fields(self):
+        fields = super().get_search_slug_fields()
+        fields.append('doc_identifier')
+        fields.append('status')
+        fields.append('recep_received')
+        fields.append('comment')
+        fields.append('courier')
+        fields.append('received_by')
+        return fields
 
     class Meta:
         app_label = 'document_tracking'
