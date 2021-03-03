@@ -5,7 +5,7 @@ from django.db import models
 
 from edc_base.model_mixins import BaseUuidModel
 from edc_base.sites.site_model_mixin import SiteModelMixin
-
+from edc_search.model_mixins import SearchSlugModelMixin
 from bhp_personnel.models import Department, Employee
 from .document import Document
 from ..choices import DOCUMENT_STATUS, PRIORITY
@@ -32,7 +32,8 @@ class Courier(BaseUuidModel):
         return f'{self.full_name}'
 
 
-class SendHardCopy(BaseUuidModel, SiteModelMixin, models.Model):
+class SendHardCopy(BaseUuidModel, SearchSlugModelMixin,
+                   SiteModelMixin, models.Model):
 
     doc_identifier = models.CharField(
         verbose_name="Document Identifier",
