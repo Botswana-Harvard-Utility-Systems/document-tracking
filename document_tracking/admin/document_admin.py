@@ -38,3 +38,8 @@ class DocumentAdmin(ModelAdminMixin, admin.ModelAdmin):
             return False
         return True
 
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = super().get_readonly_fields(request, obj)
+        if request.GET.get('document_form') and request.GET.get('document_form') == 'hard_copy':
+            readonly_fields += ('file',)
+        return readonly_fields
