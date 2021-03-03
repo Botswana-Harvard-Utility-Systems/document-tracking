@@ -8,6 +8,7 @@ from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_search.model_mixins import SearchSlugModelMixin
 
 from bhp_personnel.models import Department, Employee
+from .proxy_user import ProxyUser
 from ..choices import DOCUMENT_STATUS, PRIORITY
 
 
@@ -50,7 +51,7 @@ class SendHardCopy(BaseUuidModel, SearchSlugModelMixin,
         blank=True)
 
     send_to = models.ForeignKey(
-        User,
+        ProxyUser,
         on_delete=models.SET_NULL,
         null=True,
         blank=True)

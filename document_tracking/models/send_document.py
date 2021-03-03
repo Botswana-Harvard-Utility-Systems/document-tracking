@@ -8,6 +8,7 @@ from edc_base.sites.site_model_mixin import SiteModelMixin
 from edc_search.model_mixins import SearchSlugModelMixin
 from bhp_personnel.models import Department, Employee
 from .document import Document
+from .proxy_user import ProxyUser
 from ..choices import DOCUMENT_STATUS, PRIORITY
 
 
@@ -31,7 +32,7 @@ class SendDocument(BaseUuidModel, SearchSlugModelMixin,
         blank=True)
 
     send_to = models.ManyToManyField(
-        User,
+        ProxyUser,
         blank=True)
 
     status = models.CharField(
